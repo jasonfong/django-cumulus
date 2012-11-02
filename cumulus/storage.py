@@ -79,7 +79,9 @@ class CloudFilesStorage(Storage):
 
     def _get_container_url(self):
         if not hasattr(self, '_container_public_uri'):
-            if self.use_ssl:
+            if CUMULUS.get('CONTAINER_URI'):
+                self._container_public_uri = CUMULUS['CONTAINER_URI']
+            elif self.use_ssl:
                 self._container_public_uri = self.container.public_ssl_uri()
             else:
                 self._container_public_uri = self.container.public_uri()
