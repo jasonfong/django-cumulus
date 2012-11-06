@@ -130,7 +130,8 @@ class CloudFilesStorage(Storage):
         else:
             mime_type, encoding = mimetypes.guess_type(name)
             cloud_obj.content_type = mime_type
-        cloud_obj.headers['Access-Control-Allow-Origin'] = '*'
+        if 'ALLOW_ORIGIN' in CUMULUS:
+            cloud_obj.headers['Access-Control-Allow-Origin'] = CUMULUS['ALLOW_ORIGIN']
         cloud_obj.send(content)
         content.close()
         return name
